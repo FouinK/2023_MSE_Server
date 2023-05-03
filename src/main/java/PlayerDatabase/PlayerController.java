@@ -24,14 +24,17 @@ public class PlayerController {
 //		  "wins" : true or false
 //	}
 
-	
+	// read
 	@GetMapping("/database/player/...")
 	// 
 	
+	// create
     @PostMapping("/database/player/...")
     // playerService.crud(playerId) 를 사용하는 로직
 	
+	// update
 	@PutMapping()
 	
+	// delete
 	@DeleteMapping()
 }
