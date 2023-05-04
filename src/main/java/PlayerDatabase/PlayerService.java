@@ -42,7 +42,7 @@ public class PlayerService {
     }
     
     // update player's status
-    public void updateWinnerStats(long id, boolean isWin) {
+    public void updatePlayerStats(long id, boolean isWin) {
         Optional<Player> playerOptional = playerRepository.findById(id); 
 
         Player player = playerOptional.get();

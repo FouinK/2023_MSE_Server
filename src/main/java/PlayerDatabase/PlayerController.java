@@ -1,11 +1,19 @@
 package PlayerDatabase;
 
-import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+
+@RestController
+@RequestMapping("/stats") // URL : /stats/player/crud
 public class PlayerController {
 	
 	private final PlayerService playerService;
@@ -14,8 +22,7 @@ public class PlayerController {
         this.playerService = playerService;
     }
 	
-	// winner 객체, looser 객체 따로따로 요청을 받아서 
-	// playerService에서 winner는 win+1, looser는 lose+1 해줄거임
+// 	 player 객체를 받아서 controller에서 win인지 아닌지 상태 판별할거임
 
 //   RequestBody
 
@@ -24,17 +31,28 @@ public class PlayerController {
 //		  "wins" : true or false
 //	}
 
-	// read
-	@GetMapping("/database/player/...")
-	// 
-	
 	// create
-    @PostMapping("/database/player/...")
-    // playerService.crud(playerId) 를 사용하는 로직
+    @PostMapping("/player/create")
+    public void createPlayerStats(@RequestBody Player player) {
+    	playerService.createStats(player);
+    }
 	
+	// read
+	@GetMapping("/player/{id}")	
+	public Player readPlayerStats(@PathVariable("id") long id) {
+		return playerService.readStats(id);
+	}
+
 	// update
-	@PutMapping()
+	@PutMapping("/player/{id}")
+	public void updatePlayerStats(@PathVariable("id") long id, @RequestBody Map<String, Boolean> request) {
+		boolean isWin = request.get("wins");
+		playerService.updatePlayerStats(id,isWin);
+	}
 	
 	// delete
-	@DeleteMapping()
+	@DeleteMapping("/player/{id}")
+	public void deletePlayerStats(@PathVariable("id") long id) {
+		playerService.deleteStats(id);
+	}
 }
